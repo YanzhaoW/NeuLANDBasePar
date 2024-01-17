@@ -70,8 +70,8 @@ if __name__ == "__main__":
     input_filename: str = args.input_file
     output_fileanme: str = args.output_file
     exp_ids: str = args.expIDs
-    offspill_pos: int = args.offspill_tpat
-    num_of_plane: int = args.np
+    offspill_pos: int = int(args.offspill_tpat)
+    num_of_plane: int = int(args.np)
 
     mapping_objs = {}
     json_obj = {}
