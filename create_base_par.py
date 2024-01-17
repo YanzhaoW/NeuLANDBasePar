@@ -50,6 +50,11 @@ if __name__ == "__main__":
         help="specify the experimental IDs (semicolon separated)",
     )
     parser.add_argument(
+        "--np",
+        required=True,
+        help="specify the number of planes",
+    )
+    parser.add_argument(
         "--offspill-tpat",
         required=True,
         help="specify neuland offspill tpat position",
@@ -64,8 +69,9 @@ if __name__ == "__main__":
 
     input_filename: str = args.input_file
     output_fileanme: str = args.output_file
-    exp_ids: list[str] = args.expIDs.split(";")
+    exp_ids: str = args.expIDs
     offspill_pos: int = args.offspill_tpat
+    num_of_plane: int = args.np
 
     mapping_objs = {}
     json_obj = {}
@@ -75,6 +81,12 @@ if __name__ == "__main__":
         mapping_objs = to_json_object(objects)
     mapping_objs.sort(key=lambda x: x["barID"])
 
-    json_obj = {"expIDs": exp_ids, "detector": "neuland", "offspill": offspill_pos, "trig_mapping": mapping_objs}
+    json_obj = {
+        "expIDs": exp_ids,
+        "detector": "neuland",
+        "num_of_planes": num_of_plane,
+        "offspill": offspill_pos,
+        "trig_mapping": mapping_objs,
+    }
     with open(output_fileanme, "w", encoding="utf-8") as file:
         json.dump(json_obj, fp=file, indent=2)
