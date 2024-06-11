@@ -41,8 +41,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "-i",
         "--input-file",
-        required=True,
-        help="specify the full path of input .hh file",
+        required=False,
+        help="specify the full path of input trig .hh file",
     )
     parser.add_argument(
         "--expIDs",
@@ -75,11 +75,14 @@ if __name__ == "__main__":
 
     mapping_objs = {}
     json_obj = {}
-    with open(input_filename, "r", encoding="utf-8") as file:
-        lines = file.readlines()
-        objects = [to_object(x) for x in lines]
-        mapping_objs = to_json_object(objects)
-    mapping_objs.sort(key=lambda x: x["barID"])
+    if input_filename != None:
+        with open(input_filename, "r", encoding="utf-8") as file:
+            lines = file.readlines()
+            objects = [to_object(x) for x in lines]
+            mapping_objs = to_json_object(objects)
+        mapping_objs.sort(key=lambda x: x["barID"])
+    else:
+        print("input trig file is empty. No trig info is generated!");
 
     json_obj = {
         "expIDs": exp_ids,
